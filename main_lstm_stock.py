@@ -39,15 +39,12 @@ x_ma_vol_scaled_shift = np.asarray(x_ma_vol_scaled_shift).T
 
 x_scaled = np.concatenate((x_ma_scaled[:-1],x_ma_vol_scaled_shift),axis=1)
 
-
 data = pd.DataFrame(x_scaled)
 
 x_serial, y_serial = ds.create_dataset(data,5)
 
 y_serial_max10 = [np.max(y_serial[i:i+20]) for i in range(len(y_serial))]
 y_serial_max10 = np.asarray(y_serial_max10)
-
-
 
 x_train = x_serial[:200]
 y_train = y_serial_max10[:200].reshape((-1,1))

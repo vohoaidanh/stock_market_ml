@@ -106,17 +106,19 @@ class Dataset():
     def create_dataset(self):
         data = self.data
         DROP = 50
-        _open = data['Open'].to_numpy()[DROP:]
-        _close = data['Close'].to_numpy()[DROP:]
-        _high = data['High'].to_numpy()[DROP:]
-        _low = data['Low'].to_numpy()[DROP:]
-        _volume = data['Volume'].to_numpy()[DROP:]
-        _ma5 = make_ma(self.data,5).to_numpy()[DROP:]
-        _ma20 = make_ma(self.data,20).to_numpy()[DROP:]
-        _ma50 = make_ma(self.data,50).to_numpy()[DROP:]
-        _vma20 = make_ma(self.data,20,'Volume').to_numpy()[DROP:]
-        
-        return _open,_close,_high,_low,_ma5,_ma20,_ma50,_vma20,_volume
+        _open = data['Open'].to_numpy()
+        _close = data['Close'].to_numpy()
+        _high = data['High'].to_numpy()
+        _low = data['Low'].to_numpy()
+        _close_diff = _close[1:]/_close[:-1]
+        _volume = data['Volume'].to_numpy()
+        _ma5 = make_ma(self.data,5).to_numpy()
+        _ma20 = make_ma(self.data,20).to_numpy()
+        _ma50 = make_ma(self.data,50).to_numpy()
+        _vma20 = make_ma(self.data,20,'Volume').to_numpy() 
+        _volume_diff = _volume/_vma20
+        #return _close_diff[DROP-1:],_volume_diff[DROP:],_open[DROP:],_close[DROP:],_high[DROP:],_low[DROP:],_ma5[DROP:],_ma20[DROP:],_ma50[DROP:],_vma20[DROP:],_volume[DROP:]
+        return _close[DROP:],_close_diff[DROP-1:],_volume_diff[DROP:]
 
     
 class DMinMaxScaler():
